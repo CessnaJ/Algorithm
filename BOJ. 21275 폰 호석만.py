@@ -32,8 +32,8 @@ for j in b_before_conv:
 # brute force 숫자를 줄이기 위해서 각 input에서 나오는 max 글자 이상의 진법만 test한다. (예를 들어서 z가 써있는데 2진법일 수는 없는것. z라는게 20진법에 있을 수 없는 숫자다.)
 
 
-for x in range(from_this_a, 36):     # 진법 갈겨보기
-    for y in range(from_this_b, 36): # 서로 다른 숫자로 대응해봐야 매칭을 판단 가능하니 이렇게.
+for x in range(from_this_a, 37):     # 진법 갈겨보기 원래 36으로 썼는데 도움을 받았습니다.
+    for y in range(from_this_b, 37): # 서로 다른 숫자로 대응해봐야 매칭을 판단 가능하니 이렇게.
         if x != y:
             temp_a = 0
             temp_b = 0
@@ -46,7 +46,9 @@ for x in range(from_this_a, 36):     # 진법 갈겨보기
                 temp_b += (conversion_dict[digit] * (y ** scale_b))
                 scale_b += 1
 
-            if temp_a == temp_b:
+            if temp_a < temp_b:
+                break
+            elif temp_a == temp_b and (temp_a < 2**63):
                 matching_list.append([temp_a, x, y])
 
 # 다 돌렸으니까 뽑자.
