@@ -10,9 +10,22 @@
 #
 #
 # recursive(5)
+#
+# dimension_matrix = [[0]*5 for _ in range(5)]
+#
+# dimension_matrix[0][2:5] = [1]*3
+#
+# print(dimension_matrix)
 
-dimension_matrix = [[0]*5 for _ in range(5)]
+lst1 = []
 
-dimension_matrix[0][2:5] = [1]*3
 
-print(dimension_matrix)
+def test(a):
+    return None
+
+lst1.append(test('b'))
+lst1.append(test('b'))
+lst1.append(test('b'))
+
+print(lst1)
+
