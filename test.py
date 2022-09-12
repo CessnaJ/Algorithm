@@ -90,4 +90,11 @@
 #     Pathlist.sort(key=lambda x : (-x[0],x[1]))
 
 
+x = 'global'
 
+def foo():
+    x = 'foo'
+    def bar():
+        print(x)
+    bar()
+foo()
