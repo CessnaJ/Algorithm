@@ -98,3 +98,23 @@ def foo():
         print(x)
     bar()
 foo()
+
+
+def insersionSort(arr):
+    for i in range(1,len(arr)): # 1부터 len-1까지
+        key = arr[i] # 이전 정렬arr과 비교할 새로운 element
+        j = i-1      # 이전 정렬된arr의 최대 idx(while문으로 역 bubble sort를 하기 위한 기준 idx)
+        while j >= 0 and key < arr[j]: # j를 1씩 빼면서 반복. 비교idx가 0이상/ pivot인 key element가 역 bubblesort 대상 element보다 작으면.
+            arr[j+1] = arr[j]          # 이미 정렬되어 있는 list니까 어디에 끼워줄지 idx를 찾는것. 역으로 하나씩 비교하면서
+            j -= 1
+        arr[j+1] = key
+
+
+from collections import deque, Counter
+
+
+q = deque()
+
+diction = Counter()
+diction.
+
