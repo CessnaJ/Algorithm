@@ -27,14 +27,17 @@ def isvalid(newZ, newY, newX):
     if not (0 <= newX < length and 0 <= newY < width and 0 <= newZ < height):
         return False
 
+    if visited[newZ][newY][newX]:
+        return False
+
     if matrix[newZ][newY][newX] in [-1, 1]:
         return False
     return True
 
 # sys.stdin.readline().strip()
-matrix = [[list(map(int, sys.stdin.readline().strip().split())) for y in range(width)] for z in range(height)]
+matrix = [[list(map(int, sys.stdin.readline().split())) for y in range(width)] for z in range(height)]
 # print(matrix)
-
+visited = [[[False]*length for yy in range(width)] for zz in range(height)]
 
 Q = deque()
 for z in range(height):
@@ -44,13 +47,15 @@ for z in range(height):
                 Q.append((z, y, x, 0)) # 0은 카운트
 
 while Q:
-    current = Q.popleft()
-    # print(current)
-    z = current[0]
-    y = current[1]
-    x = current[2]
-    count = current[3]
+    # current = Q.popleft()
+    # # print(current)
+    # z = current[0]
+    # y = current[1]
+    # x = current[2]
+    # count = current[3]
+    z, y, x, count = Q.popleft()
     matrix[z][y][x] = 1
+    visited[z][y][x] = True
 
     for dir in range(6):
         tempz = z + dz[dir]
