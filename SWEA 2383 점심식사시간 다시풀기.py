@@ -25,6 +25,18 @@ def calc_distance(person, stair):
     # return abs(person[0] - stair[0]) + abs(person[1] - stair[1])  # 1분 대기타니까 기본 1 더해줌.
 
 
+def get_stair_time(arr, k):
+    if not arr:
+        return 0
+    i = 3
+    while i < len(arr):
+        if arr[i] < arr[i-3] + k:
+            arr[i] = arr[i-3] + k
+        i += 1
+    return arr[-1] + k
+
+
+
 T = int(input())
 
 for case in range(1, T + 1):
@@ -41,8 +53,7 @@ for case in range(1, T + 1):
     people_num = len(person_coors)
     stair_num = len(stair_coors)
 
-    distance_to_each_floor = [[] for _ in
-                              range(people_num)]  # 사람마다 각 계단으로 가면 얼마나 거리가 되는지. 계단 하나가 무지성 999인거 대비해서 다 해줘야할듯.
+    distance_to_each_floor = [[] for _ in range(people_num)]  # 사람마다 각 계단으로 가면 얼마나 거리가 되는지. 계단 하나가 무지성 999인거 대비해서 다 해줘야할듯.
     # [ [1번남자a계단, 1번남자b계단], [2번남자a계단, 2번남자b계단], [3번남자a계단, 3번남자b계단] .... ]
     for i in range(people_num):
         for j in range(stair_num):
@@ -50,7 +61,7 @@ for case in range(1, T + 1):
 
     # 와 계단 입구 2개구나 다행이다... DFS로 조합만들고 시뮬레이션 계산함수 만들어야하나 했는데 무지성 탐색 가능.. ㅠㅠ
 
-    # 일단 backtracking해주는게 대기시간 고려 안하고 min값보다 저 무지성 합이 크면 그건 볼 필요가 없음.
+    # 일단 backtracking해주는게 대기시간 고려 안하고 min값보다 저 무지성 합이 크면 그건 볼 필요가 없음. - 이거떄문에 오히려 더 틀림. 더 잘 분배되는 경우도 있다.
     min_time = 9999999
     for i in range(1 << people_num):  # 0 ~ 2^10 # 00000~00011~11111
         on_stair_a = []
@@ -63,34 +74,44 @@ for case in range(1, T + 1):
         on_stair_a.sort()
         on_stair_b.sort()
         # 오름차순 정렬했으니 먼저 도착한 친구부터 들어갈거.
-        if sum(on_stair_a) > min_time or sum(on_stair_b) > min_time:
-            continue
+        # if sum(on_stair_a) > min_time or sum(on_stair_b) > min_time:
+        #     continue
+
+        # on_stair_a = [6,7,8]
+        # on_stair_b = [8,9,9]
+
 
         temp_a = 0
         temp_b = 0
         on_stair_a = [0] + on_stair_a + [0, 0, 0]
         on_stair_b = [0] + on_stair_b + [0, 0, 0]
 
-        for anchor in range(1, len(on_stair_a) - 3):
-            temp_a += on_stair_a[anchor]
-            on_stair_a[anchor + 1] -= on_stair_a[anchor]
-            on_stair_a[anchor + 2] -= on_stair_a[anchor]
-            on_stair_a[anchor] = 0
-            if on_stair_a[anchor + 2] == 0 and on_stair_a[anchor + 3] != 0:
-                on_stair_a[anchor + 3] -= 1
-            elif on_stair_a[anchor + 1] == 0 and on_stair_a[anchor + 2] != 0:
-                on_stair_a[anchor + 2] -= 1
+        print(on_stair_a)
+        print(on_stair_b)
 
+        temp_a = get_stair_time(on_stair_a, stair_a_length)
+        temp_b = get_stair_time(on_stair_b, stair_b_length)
 
-        for anchor in range(1, len(on_stair_b) - 3):
-            temp_b += on_stair_b[anchor]
-            on_stair_b[anchor + 1] -= on_stair_b[anchor]
-            on_stair_b[anchor + 2] -= on_stair_b[anchor]
-            on_stair_b[anchor] = 0
-            if on_stair_b[anchor + 2] == 0 and on_stair_b[anchor + 3] != 0:
-                on_stair_b[anchor + 3] -= 1
-            elif on_stair_b[anchor + 1] == 0 and on_stair_b[anchor + 2] != 0:
-                on_stair_b[anchor + 2] -= 1
+        # for anchor in range(1, len(on_stair_a) - 3):
+        #     temp_a += on_stair_a[anchor]
+        #     on_stair_a[anchor + 1] -= on_stair_a[anchor]
+        #     on_stair_a[anchor + 2] -= on_stair_a[anchor]
+        #     on_stair_a[anchor] = 0
+        #     if on_stair_a[anchor + 2] == 0 and on_stair_a[anchor + 3] != 0:
+        #         on_stair_a[anchor + 3] -= 1
+        #     elif on_stair_a[anchor + 1] == 0 and on_stair_a[anchor + 2] != 0:
+        #         on_stair_a[anchor + 2] -= 1
+        #
+        #
+        # for anchor in range(1, len(on_stair_b) - 3):
+        #     temp_b += on_stair_b[anchor]
+        #     on_stair_b[anchor + 1] -= on_stair_b[anchor]
+        #     on_stair_b[anchor + 2] -= on_stair_b[anchor]
+        #     on_stair_b[anchor] = 0
+        #     if on_stair_b[anchor + 2] == 0 and on_stair_b[anchor + 3] != 0:
+        #         on_stair_b[anchor + 3] -= 1
+        #     elif on_stair_b[anchor + 1] == 0 and on_stair_b[anchor + 2] != 0:
+        #         on_stair_b[anchor + 2] -= 1
 
 
         if max(temp_a, temp_b) < min_time:
