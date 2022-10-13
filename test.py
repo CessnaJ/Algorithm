@@ -1,6 +1,4 @@
-givenset = set([1,2,3])
-settoadd = set([3,4,5])
-lista = [3,4,5,6]
+a = None
 
-lista |= givenset
-print(settoadd)
+if a:
+    print('논도 프린트 해주네')
