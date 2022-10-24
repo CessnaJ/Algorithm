@@ -18,3 +18,7 @@ for alt in range(1, height): # 첫 열 채우기
 for altitude in range(height):
     for distance in range(length):
         submatrix1[altitude][distance] = submatrix1[altitude][distance] + max()
+
+
+# 위쪽 오른쪽으로 누적합 채워나가기 (matrix값, 누적합 matrix의 왼쪽,아래쪽과 비교해서 더 큰거랑 더해줌)
+# 왼쪽 위로 누적합 채워나가기 (matrix값, 누적합matrix의 오른쪽, 아래쪽과 비교해서 더 큰거랑 더해줌)
