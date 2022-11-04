@@ -44,11 +44,15 @@
 # A, B를 2진법으로 봐서 A의 2진법 자리수, B의 2진법 자리수를 파악.
 # A일때 패턴시작의 몇번째인지 보기.
 # B일때 각자리 수 패턴 시작의 몇번인지 보기.
-A, B = map(int, input().split())
-scale = 0
-while A > scale**2:
+# A, B = map(int, input().split())
+# scale = 0
+# while A > scale**2:
+#
+#
+#
+#     scale += 1
 
+for i in range(10):
+    pass
 
-
-    scale += 1
-
+print(i)
