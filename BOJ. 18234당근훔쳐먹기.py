@@ -16,19 +16,27 @@
 # 다 냅뒀다고 쳤을때, T일 뒤 값을 정렬시키고. 걔를 먹고 pop
 # 그 전날값으로 다 영양제 밸류만큼 빼기. pop해서 더하기
 # 어쩔수 없이 대소비교를 해야된다 왜? - 기본값이 차이가 엄청나는 경우가 있기 때문. 중간에 역전을 하게 되는 경우가 발생
+# from sys import stdin
+#
+# carrots, days = map(int, stdin.readline().split())
+# carrot_list = [list(map(int, stdin.readline().split())) for _ in range(carrots)]  # [[default, increment]..]
+# taste_sum = 0
+#
+# carrot_list.sort(key=lambda x: x[1])
+#
+# for default, increment in carrot_list:
+
 from sys import stdin
 
 carrots, days = map(int, stdin.readline().split())
-carrot_list = [list(map(int, stdin.readline().split())) for _ in range(carrots)]  # [[default, increment]..]
-taste_sum = 0
+carrot_list = list(zip(*[list(map(int, stdin.readline().split())) for _ in range(carrots)]))  # [[default, increment]..]
+taste_sum = sum(carrot_list[0]) # 일단 당근 다먹을거니까
 
-carrot_list.sort(key=lambda x: x[1])
+increment_list = sorted(list(carrot_list[1]))  # asc sort
 
-for default, increment in carrot_list:
-
-
-
-
+for i in range(carrots):
+    taste_sum += increment_list[i] * (days-carrots + i ) # 가장 맛없는거부터 먹을거야 (마지막에 가장 맛있는 영양제 농축만 먹게)
+print(taste_sum)
 #
 # for i in range(carrots):
 #     carrot_list[i].append(carrot_list[i][0] + carrot_list[i][1]*(days-1))  # [초기값, 증가분, 마지막날의 맛]
