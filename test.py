@@ -1,4 +1,16 @@
-a = None
+# from collections import defaultdict
 
-if a:
-    print('논도 프린트 해주네')
+N = int()
+
+
+# countdict = defaultdict()
+countset = set('ChongChong')
+
+
+for _ in range(N):
+    froma_tob = input().split()
+    if froma_tob[0] in countset:
+        countset.add(froma_tob[1])
+    if froma_tob[1] in countset:
+        countset.add(froma_tob[0])
+print(len(countset))
